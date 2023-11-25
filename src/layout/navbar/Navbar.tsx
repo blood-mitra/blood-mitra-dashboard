@@ -1,7 +1,10 @@
-import { BiSolidDashboard, BiSolidGroup } from "react-icons/bi";
-import classes from "./Navbar.module.css";
-import { NavLink } from "react-router-dom";
 import cx from "clsx";
+
+import { BiSolidDashboard, BiSolidGroup } from "react-icons/bi";
+
+import { NavLink } from "react-router-dom";
+
+import classes from "./Navbar.module.css";
 
 const data = [
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

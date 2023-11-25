@@ -1,48 +1,117 @@
 import {
-  TextInput,
-  PasswordInput,
-  Checkbox,
-  Anchor,
-  Paper,
-  Title,
-  Text,
-  Container,
-  Group,
   Button,
+  Container,
+  LoadingOverlay,
+  PasswordInput,
+  TextInput,
+  useMantineColorScheme,
 } from "@mantine/core";
-import classes from "./index.module.css";
+
+import { useForm } from "@mantine/form";
+
+import { useHotkeys } from "@mantine/hooks";
+
+import { notifications } from "@mantine/notifications";
+
+import { AxiosError } from "axios";
+
+import { useContext, useEffect } from "react";
+
+import { Navigate, useLocation } from "react-router-dom";
+
+import { AuthContext } from "../../context";
+
+import { useSubmitData } from "./queries";
+
+interface FormValues {
+  email: string;
+  password: string;
+}
 
 export function Login() {
+  const { toggleColorScheme } = useMantineColorScheme();
+
+  useHotkeys([["mod+J", () => toggleColorScheme()]]);
+
+  const location = useLocation();
+
+  const { token, setAuthData } = useContext(AuthContext);
+
+  const form = useForm<FormValues>({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+
+    validate: {
+      email: (value) => (/^\S+@\S+\.\S+$/.test(value) ? null : "Invalid email"),
+      password: (value) =>
+        value.length < 8 ? "Name must have at least 8 letters" : null,
+    },
+  });
+
+  const emailRegex = /^\S+@\S+\.\S+$/;
+
+  const { mutateAsync, error: loginError, isPending } = useSubmitData();
+
+  const error: AxiosError = loginError as AxiosError;
+
+  const handleSubmit = async ({ email, password }: FormValues) => {
+    const fetchedData = await mutateAsync({ email, password });
+
+    setAuthData(fetchedData.data?.data);
+  };
+
+  useEffect(() => {
+    if (error) {
+      notifications.show({
+        title: "Error",
+        message:
+          (error.response?.status ?? 400) < 500
+            ? "Sorry, we can't find an account with this email address and password"
+            : "Server Error, please try again later.",
+        color: "red",
+      });
+    }
+  }, [error]);
+
+  if (token?.accessToken)
+    return <Navigate to={"/"} state={{ from: location }} replace />;
+
   return (
     <Container size={420} my={40}>
-      <Title ta="center" className={classes.title}>
-        Welcome back!
-      </Title>
-      <Text c="dimmed" size="sm" ta="center" mt={5}>
-        Do not have an account yet?{" "}
-        <Anchor size="sm" component="button">
-          Create account
-        </Anchor>
-      </Text>
-
-      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <TextInput label="Email" placeholder="you@mantine.dev" required />
+      <LoadingOverlay visible={isPending} />
+      <form
+        style={{ position: "relative" }}
+        onSubmit={form.onSubmit(handleSubmit)}
+      >
+        <TextInput
+          label="Email"
+          placeholder="Email"
+          {...form.getInputProps("email")}
+          mb={"lg"}
+        />
         <PasswordInput
           label="Password"
-          placeholder="Your password"
-          required
-          mt="md"
+          placeholder="password"
+          mb="xl"
+          {...form.getInputProps("password")}
         />
-        <Group justify="space-between" mt="lg">
-          <Checkbox label="Remember me" />
-          <Anchor component="button" size="sm">
-            Forgot password?
-          </Anchor>
-        </Group>
-        <Button fullWidth mt="xl">
-          Sign in
+
+        <Button
+          type="submit"
+          size="md"
+          fullWidth
+          disabled={
+            !(
+              form.values.password.length >= 8 &&
+              emailRegex.test(form.values.email)
+            )
+          }
+        >
+          Sign in{" "}
         </Button>
-      </Paper>
+      </form>
     </Container>
   );
 }

@@ -11,8 +11,8 @@
 
 .mainSection {
   padding-bottom: var(--mantine-spacing-sm);
-  padding-left: var(--mantine-spacing-sm);
-  padding-right: var(--mantine-spacing-sm);
+  padding-left: 1.5rem;
+  padding-right: 3rem;
 }
 
 .user {
