@@ -9,11 +9,11 @@ import {
   localStorageColorSchemeManager,
 } from "@mantine/core";
 
-import { Layout } from "./layout";
-
 import { Notifications } from "@mantine/notifications";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+import { Layout } from "./layout";
 
 import { Dashboard } from "./pages/dashboard";
 import { Users } from "./pages/users";
@@ -44,27 +44,27 @@ const theme = createTheme({
   },
 });
 
-export default function App() {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Layout />,
-      children: [
-        { index: true, element: <Dashboard /> },
-        {
-          path: "users",
-          element: <Users />,
-        },
-        {
-          path: "*",
-          element: <NotFoundTitle />,
-        },
-      ],
-      errorElement: <NotFoundTitle />,
-    },
-    { path: "/login", element: <Login />, errorElement: <NotFoundTitle /> },
-  ]);
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      { index: true, element: <Dashboard /> },
+      {
+        path: "users",
+        element: <Users />,
+      },
+      {
+        path: "*",
+        element: <NotFoundTitle />,
+      },
+    ],
+    errorElement: <NotFoundTitle />,
+  },
+  { path: "/login", element: <Login />, errorElement: <NotFoundTitle /> },
+]);
 
+export default function App() {
   return (
     <MantineProvider
       colorSchemeManager={colorSchemeManager}

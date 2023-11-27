@@ -19,7 +19,7 @@ import { IconChevronDown, IconLogout } from "@tabler/icons-react";
 
 import cx from "clsx";
 
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 import { useNavigate } from "react-router-dom";
 
@@ -44,7 +44,7 @@ export const Header = () => {
 
   const [opened, { toggle }] = useDisclosure(false);
 
-  const [userMenuOpened, setUserMenuOpened] = useState(false);
+  const [userMenuOpened, setUserMenuOpened] = useDisclosure(false);
 
   const navigate = useNavigate();
 
@@ -68,8 +68,8 @@ export const Header = () => {
             width={260}
             position="bottom-end"
             transitionProps={{ transition: "pop-top-right" }}
-            onClose={() => setUserMenuOpened(false)}
-            onOpen={() => setUserMenuOpened(true)}
+            onClose={() => setUserMenuOpened.close()}
+            onOpen={() => setUserMenuOpened.open()}
             withinPortal
           >
             <Menu.Target>

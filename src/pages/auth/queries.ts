@@ -1,6 +1,4 @@
-import { useMutation, UseMutationResult } from "@tanstack/react-query";
-
-import { AxiosResponse } from "axios";
+import { useMutation } from "@tanstack/react-query";
 
 import { Auth } from "../../context";
 
@@ -11,18 +9,18 @@ interface Payload {
   password: string;
 }
 
-export const useSubmitData = (): UseMutationResult<
-  AxiosResponse<Payload>,
-  Error,
-  Payload
-> => {
-  return useMutation<AxiosResponse<Payload>, Error, Payload, Auth>({
+interface LoginResponse {
+  data: Auth;
+}
+
+export const useSubmitData = () => {
+  return useMutation({
     mutationFn: async ({ email, password }: Payload) => {
-      const response = await axios.post<Payload, AxiosResponse<Payload>>(
-        "/accounts/login",
-        { email, password }
-      );
-      return response;
+      const { data } = await axios.post<LoginResponse>("/accounts/login", {
+        email,
+        password,
+      });
+      return data;
     },
   });
 };

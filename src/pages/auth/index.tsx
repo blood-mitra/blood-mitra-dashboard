@@ -52,15 +52,26 @@ export function Login() {
 
   const emailRegex = /^\S+@\S+\.\S+$/;
 
-  const { mutateAsync, error: loginError, isPending } = useSubmitData();
+  const {
+    data,
+    isSuccess,
+    mutate,
+    error: loginError,
+    isPending,
+  } = useSubmitData();
 
   const error: AxiosError = loginError as AxiosError;
 
-  const handleSubmit = async ({ email, password }: FormValues) => {
-    const fetchedData = await mutateAsync({ email, password });
-
-    setAuthData(fetchedData.data?.data);
+  const handleSubmit = ({ email, password }: FormValues) => {
+    mutate({ email, password });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(data);
+      setAuthData(data.data);
+    }
+  }, [data, isSuccess, setAuthData]);
 
   useEffect(() => {
     if (error) {

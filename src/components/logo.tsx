@@ -6,6 +6,7 @@ export const Logo = () => {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
 
   useHotkeys([["mod+J", () => toggleColorScheme()]]);
+
   return (
     <svg
       width="142"
