@@ -12,7 +12,6 @@ import {
   rem,
   useMantineColorScheme,
 } from "@mantine/core";
-
 import { useDisclosure, useHotkeys } from "@mantine/hooks";
 
 import { IconChevronDown, IconLogout } from "@tabler/icons-react";
@@ -44,7 +43,8 @@ export const Header = () => {
 
   const [opened, { toggle }] = useDisclosure(false);
 
-  const [userMenuOpened, setUserMenuOpened] = useDisclosure(false);
+  const [userMenuOpened, { open: openMenu, close: closeMenu }] =
+    useDisclosure(false);
 
   const navigate = useNavigate();
 
@@ -68,8 +68,8 @@ export const Header = () => {
             width={260}
             position="bottom-end"
             transitionProps={{ transition: "pop-top-right" }}
-            onClose={() => setUserMenuOpened.close()}
-            onOpen={() => setUserMenuOpened.open()}
+            onClose={() => closeMenu()}
+            onOpen={() => openMenu()}
             withinPortal
           >
             <Menu.Target>
