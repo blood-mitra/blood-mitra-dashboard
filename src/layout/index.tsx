@@ -1,9 +1,7 @@
 import { AppShell } from "@mantine/core";
-
 import { useDisclosure } from "@mantine/hooks";
 
 import { useContext } from "react";
-
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 import { AuthContext } from "../context";

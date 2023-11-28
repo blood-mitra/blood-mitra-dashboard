@@ -68,8 +68,8 @@ export const Header = () => {
             width={260}
             position="bottom-end"
             transitionProps={{ transition: "pop-top-right" }}
-            onClose={() => closeMenu()}
-            onOpen={() => openMenu()}
+            onClose={closeMenu}
+            onOpen={openMenu}
             withinPortal
           >
             <Menu.Target>

@@ -15,11 +15,13 @@ interface LoginResponse {
 
 export const useSubmitData = () => {
   return useMutation({
-    mutationFn: async ({ email, password }: Payload) => {
-      const { data } = await axios.post<LoginResponse>("/accounts/login", {
-        email,
-        password,
-      });
+    mutationFn: async (payload: Payload) => {
+      console.log(payload);
+      const { data } = await axios.post<LoginResponse>(
+        "/accounts/login",
+        payload
+      );
+      console.log(data);
       return data;
     },
   });

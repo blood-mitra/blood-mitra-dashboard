@@ -6,6 +6,7 @@ import classes from "./index.module.css";
 
 export function NotFoundTitle() {
   const navigate = useNavigate();
+
   return (
     <Container className={classes.root}>
       <div className={classes.label}>404</div>

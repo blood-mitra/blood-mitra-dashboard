@@ -1,5 +1,4 @@
 import { useMantineColorScheme } from "@mantine/core";
-
 import { useHotkeys } from "@mantine/hooks";
 
 export const Logo = () => {

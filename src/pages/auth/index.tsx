@@ -28,6 +28,8 @@ interface FormValues {
   password: string;
 }
 
+const EMAIL_REGEX = /^\S+@\S+\.\S+$/;
+
 export function Login() {
   const { toggleColorScheme } = useMantineColorScheme();
 
@@ -44,13 +46,11 @@ export function Login() {
     },
 
     validate: {
-      email: (value) => (/^\S+@\S+\.\S+$/.test(value) ? null : "Invalid email"),
+      email: (value) => (EMAIL_REGEX.test(value) ? null : "Invalid email"),
       password: (value) =>
         value.length < 8 ? "Name must have at least 8 letters" : null,
     },
   });
-
-  const emailRegex = /^\S+@\S+\.\S+$/;
 
   const {
     data,
@@ -62,13 +62,12 @@ export function Login() {
 
   const error: AxiosError = loginError as AxiosError;
 
-  const handleSubmit = ({ email, password }: FormValues) => {
-    mutate({ email, password });
+  const handleSubmit = (payload: FormValues) => {
+    mutate(payload);
   };
 
   useEffect(() => {
     if (isSuccess) {
-      console.log(data);
       setAuthData(data.data);
     }
   }, [data, isSuccess, setAuthData]);
@@ -90,7 +89,7 @@ export function Login() {
     return <Navigate to={"/"} state={{ from: location }} replace />;
 
   return (
-    <Container size={420} my={40}>
+    <Container size={420} py={40}>
       <LoadingOverlay visible={isPending} />
       <form
         style={{ position: "relative" }}
@@ -116,11 +115,11 @@ export function Login() {
           disabled={
             !(
               form.values.password.length >= 8 &&
-              emailRegex.test(form.values.email)
+              EMAIL_REGEX.test(form.values.email)
             )
           }
         >
-          Sign in{" "}
+          Sign in
         </Button>
       </form>
     </Container>

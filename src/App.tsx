@@ -8,7 +8,6 @@ import {
   createTheme,
   localStorageColorSchemeManager,
 } from "@mantine/core";
-
 import { Notifications } from "@mantine/notifications";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
