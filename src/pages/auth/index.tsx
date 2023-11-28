@@ -13,7 +13,7 @@ import { useHotkeys } from "@mantine/hooks";
 
 import { notifications } from "@mantine/notifications";
 
-import { AxiosError } from "axios";
+import { isAxiosError } from "axios";
 
 import { useContext, useEffect } from "react";
 
@@ -60,8 +60,6 @@ export function Login() {
     isPending,
   } = useSubmitData();
 
-  const error: AxiosError = loginError as AxiosError;
-
   const handleSubmit = (payload: FormValues) => {
     mutate(payload);
   };
@@ -73,17 +71,19 @@ export function Login() {
   }, [data, isSuccess, setAuthData]);
 
   useEffect(() => {
-    if (error) {
-      notifications.show({
-        title: "Error",
-        message:
-          (error.response?.status ?? 400) < 500
-            ? "Sorry, we can't find an account with this email address and password"
-            : "Server Error, please try again later.",
-        color: "red",
-      });
+    if (isAxiosError(loginError)) {
+      if (loginError) {
+        notifications.show({
+          title: "Error",
+          message:
+            (loginError.response?.status ?? 400) < 500
+              ? "Sorry, we can't find an account with this email address and password"
+              : "Server Error, please try again later.",
+          color: "red",
+        });
+      }
     }
-  }, [error]);
+  }, [loginError]);
 
   if (token?.accessToken)
     return <Navigate to={"/"} state={{ from: location }} replace />;
