@@ -28,6 +28,12 @@ interface FormValues {
   password: string;
 }
 
+interface LocationState {
+  from: {
+    pathname: string;
+  };
+}
+
 const EMAIL_REGEX = /^\S+@\S+\.\S+$/;
 
 export function Login() {
@@ -36,6 +42,8 @@ export function Login() {
   useHotkeys([["mod+J", () => toggleColorScheme()]]);
 
   const location = useLocation();
+
+  const pathname = (location.state as LocationState)?.from?.pathname ?? "/";
 
   const { token, setAuthData } = useContext(AuthContext);
 
@@ -71,26 +79,28 @@ export function Login() {
   }, [data, isSuccess, setAuthData]);
 
   useEffect(() => {
-    if (isAxiosError(loginError)) {
-      notifications.show({
-        title: "Error",
-        message:
-          (loginError.response?.status ?? 400) < 500
-            ? "Sorry, we can't find an account with this email address and password"
-            : "Server Error, please try again later.",
-        color: "red",
-      });
-    } else {
-      notifications.show({
-        title: "Error",
-        message: "Unknown error occurred",
-        color: "red",
-      });
+    if (loginError) {
+      if (isAxiosError(loginError)) {
+        notifications.show({
+          title: "Error",
+          message:
+            (loginError.status ?? 400) < 500
+              ? "Sorry, we can't find an account with this email address and password"
+              : "Server Error, please try again later.",
+          color: "red",
+        });
+      } else {
+        notifications.show({
+          title: "Error",
+          message: "Unknown error occurred",
+          color: "red",
+        });
+      }
     }
   }, [loginError]);
 
   if (token?.accessToken)
-    return <Navigate to={"/"} state={{ from: location }} replace />;
+    return <Navigate to={pathname} state={{ from: location }} replace />;
 
   return (
     <Container size={420} py={40}>
