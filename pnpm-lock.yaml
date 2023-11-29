@@ -29,9 +29,6 @@ dependencies:
   clsx:
     specifier: ^2.0.0
     version: 2.0.0
-  dotenv:
-    specifier: ^16.3.1
-    version: 16.3.1
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -1238,11 +1235,6 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.4
       csstype: 3.1.2
-    dev: false
-
-  /dotenv@16.3.1:
-    resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
-    engines: {node: '>=12'}
     dev: false
 
   /es-abstract@1.22.3:

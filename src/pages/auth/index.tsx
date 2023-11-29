@@ -71,21 +71,23 @@ export function Login() {
   }, [data, isSuccess, setAuthData]);
 
   useEffect(() => {
-    if (isAxiosError(loginError)) {
-      notifications.show({
-        title: "Error",
-        message:
-          (loginError.response?.status ?? 400) < 500
-            ? "Sorry, we can't find an account with this email address and password"
-            : "Server Error, please try again later.",
-        color: "red",
-      });
-    } else {
-      notifications.show({
-        title: "Error",
-        message: "Unknown error occurred",
-        color: "red",
-      });
+    if (loginError) {
+      if (isAxiosError(loginError)) {
+        notifications.show({
+          title: "Error",
+          message:
+            (loginError.response?.status ?? 400) < 500
+              ? "Sorry, we can't find an account with this email address and password"
+              : "Server Error, please try again later.",
+          color: "red",
+        });
+      } else {
+        notifications.show({
+          title: "Error",
+          message: "Unknown error occurred",
+          color: "red",
+        });
+      }
     }
   }, [loginError]);
 
