@@ -22,9 +22,9 @@ import { useContext } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import { Logo } from "../../components/logo";
+import { Logo } from "components/logo";
 
-import { AuthContext } from "../../context";
+import { AuthContext } from "context";
 
 import classes from "./AppHeader.module.css";
 
