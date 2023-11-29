@@ -38,9 +38,7 @@ const brandColor: MantineColorsTuple = [
 
 const theme = createTheme({
   primaryColor: "brandColor",
-  colors: {
-    brandColor,
-  },
+  colors: { brandColor },
 });
 
 const router = createBrowserRouter([
@@ -49,14 +47,8 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <Dashboard /> },
-      {
-        path: "users",
-        element: <Users />,
-      },
-      {
-        path: "*",
-        element: <NotFoundTitle />,
-      },
+      { path: "users", element: <Users /> },
+      { path: "*", element: <NotFoundTitle /> },
     ],
     errorElement: <NotFoundTitle />,
   },

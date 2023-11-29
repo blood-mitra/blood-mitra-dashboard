@@ -29,9 +29,7 @@ interface FormValues {
 }
 
 interface LocationState {
-  from: {
-    pathname: string;
-  };
+  from: { pathname: string };
 }
 
 const EMAIL_REGEX = /^\S+@\S+\.\S+$/;
@@ -48,10 +46,7 @@ export function Login() {
   const { token, setAuthData } = useContext(AuthContext);
 
   const form = useForm<FormValues>({
-    initialValues: {
-      email: "",
-      password: "",
-    },
+    initialValues: { email: "", password: "" },
 
     validate: {
       email: (value) => (EMAIL_REGEX.test(value) ? null : "Invalid email"),
@@ -112,8 +107,8 @@ export function Login() {
         <TextInput
           label="Email"
           placeholder="Email"
+          mb="lg"
           {...form.getInputProps("email")}
-          mb={"lg"}
         />
         <PasswordInput
           label="Password"

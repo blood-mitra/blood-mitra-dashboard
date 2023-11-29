@@ -63,7 +63,9 @@ export const Header = () => {
           <Box onClick={() => navigate("/")}>
             <Logo />
           </Box>
+
           <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
+
           <Menu
             width={260}
             position="bottom-end"
@@ -95,6 +97,7 @@ export const Header = () => {
                 </Group>
               </UnstyledButton>
             </Menu.Target>
+
             <Menu.Dropdown>
               <Menu.Item
                 onClick={openModal}
