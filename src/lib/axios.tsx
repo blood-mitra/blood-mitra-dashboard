@@ -1,8 +1,7 @@
+import { ReactNode, useContext, useMemo } from "react";
 import axios, { isAxiosError } from "axios";
 
-import { ReactNode, useContext, useMemo } from "react";
-
-import { AuthContext } from "../context";
+import { AuthContext } from "context";
 
 export const instance = axios.create({
   baseURL: import.meta.env?.VITE_API_BASE_URL ?? "http://localhost:8001/api",

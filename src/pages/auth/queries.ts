@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { Auth } from "../../context";
+import { Auth } from "context";
 
-import { axios } from "../../lib";
+import { axios } from "lib";
 
 interface Payload {
   email: string;
