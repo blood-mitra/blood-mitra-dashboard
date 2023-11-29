@@ -19,13 +19,17 @@ import { useContext, useEffect } from "react";
 
 import { Navigate, useLocation } from "react-router-dom";
 
-import { AuthContext } from "../../context";
+import { AuthContext } from "context";
 
 import { useSubmitData } from "./queries";
 
 interface FormValues {
   email: string;
   password: string;
+}
+
+interface LocationState {
+  from: { pathname: string };
 }
 
 const EMAIL_REGEX = /^\S+@\S+\.\S+$/;
@@ -37,13 +41,12 @@ export function Login() {
 
   const location = useLocation();
 
+  const pathname = (location.state as LocationState)?.from?.pathname ?? "/";
+
   const { token, setAuthData } = useContext(AuthContext);
 
   const form = useForm<FormValues>({
-    initialValues: {
-      email: "",
-      password: "",
-    },
+    initialValues: { email: "", password: "" },
 
     validate: {
       email: (value) => (EMAIL_REGEX.test(value) ? null : "Invalid email"),
@@ -76,7 +79,7 @@ export function Login() {
         notifications.show({
           title: "Error",
           message:
-            (loginError.response?.status ?? 400) < 500
+            (loginError.status ?? 400) < 500
               ? "Sorry, we can't find an account with this email address and password"
               : "Server Error, please try again later.",
           color: "red",
@@ -92,7 +95,7 @@ export function Login() {
   }, [loginError]);
 
   if (token?.accessToken)
-    return <Navigate to={"/"} state={{ from: location }} replace />;
+    return <Navigate to={pathname} state={{ from: location }} replace />;
 
   return (
     <Container size={420} py={40}>
@@ -104,8 +107,8 @@ export function Login() {
         <TextInput
           label="Email"
           placeholder="Email"
+          mb="lg"
           {...form.getInputProps("email")}
-          mb={"lg"}
         />
         <PasswordInput
           label="Password"
