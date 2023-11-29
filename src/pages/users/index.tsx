@@ -86,62 +86,60 @@ export const Users = () => {
   return (
     <Box>
       <LoadingOverlay visible={isLoading} />
-      <Box>
-        <Title order={1} mb={"20px"}>
-          Users
-        </Title>
-        <Grid mt={24} mb="md">
-          <LoadingOverlay visible={isLoading} />
-          <Grid.Col span={10}>
-            <TextInput
-              mt={24}
-              name="searchTerm"
-              placeholder="Search by Name or Phone Number"
-              rightSection={<IconSearch size={14} stroke={1.5} />}
-              defaultValue={searchTerm}
-              onChange={(event) => setSearchTerm(event.currentTarget.value)}
-              mb="md"
-            />
-          </Grid.Col>
-          <Grid.Col span={2}>
-            <Select
-              label="Pick Blood Type"
-              placeholder="All"
-              data={["A+", "B+", "AB+", "O+", "A-", "B-", "AB-", "O-"]}
-              defaultValue={bloodType}
-              onChange={(e) => setBloodType(e ?? "")}
-            />
-          </Grid.Col>
-        </Grid>
+      <Title order={1} mb={"20px"}>
+        Users
+      </Title>
+      <Grid mt={24} mb="md">
+        <LoadingOverlay visible={isLoading} />
+        <Grid.Col span={10}>
+          <TextInput
+            mt={24}
+            name="searchTerm"
+            placeholder="Search by Name or Phone Number"
+            rightSection={<IconSearch size={14} stroke={1.5} />}
+            defaultValue={searchTerm}
+            onChange={(event) => setSearchTerm(event.currentTarget.value)}
+            mb="md"
+          />
+        </Grid.Col>
+        <Grid.Col span={2}>
+          <Select
+            label="Pick Blood Type"
+            placeholder="All"
+            data={["A+", "B+", "AB+", "O+", "A-", "B-", "AB-", "O-"]}
+            defaultValue={bloodType}
+            onChange={(e) => setBloodType(e ?? "")}
+          />
+        </Grid.Col>
+      </Grid>
 
-        <Table
-          mb="xl"
-          horizontalSpacing="md"
-          verticalSpacing="xs"
-          highlightOnHover
-          captionSide="bottom"
-        >
-          <Table.Thead>{tableHeader}</Table.Thead>
-          <Table.Tbody>{rows}</Table.Tbody>
-        </Table>
-        {Math.ceil((data?.data.meta.total ?? 0) / 10) > 1 && (
-          <Group justify="space-between">
-            <TablePagination
-              page={page}
-              rowsPerPage={rowsPerPage}
-              total={data?.data.meta.total ?? 0}
-              onRowsPerPageChange={setRowsPerPage}
-            />
+      <Table
+        mb="xl"
+        horizontalSpacing="md"
+        verticalSpacing="xs"
+        highlightOnHover
+        captionSide="bottom"
+      >
+        <Table.Thead>{tableHeader}</Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
+      </Table>
+      {Math.ceil((data?.data.meta.total ?? 0) / 10) > 1 && (
+        <Group justify="space-between">
+          <TablePagination
+            page={page}
+            rowsPerPage={rowsPerPage}
+            total={data?.data.meta.total ?? 0}
+            onRowsPerPageChange={setRowsPerPage}
+          />
 
-            <Pagination
-              value={page}
-              total={Math.ceil((data?.data.meta.total ?? 0) / rowsPerPage)}
-              onChange={setPage}
-              withEdges
-            />
-          </Group>
-        )}
-      </Box>
+          <Pagination
+            value={page}
+            total={Math.ceil((data?.data.meta.total ?? 0) / rowsPerPage)}
+            onChange={setPage}
+            withEdges
+          />
+        </Group>
+      )}
     </Box>
   );
 };
