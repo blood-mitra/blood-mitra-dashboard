@@ -21,8 +21,6 @@ import { RowsPerPage, TablePagination, Th } from "components";
 
 import { useUsersData } from "./queries";
 
-const NUMBERREGEX = new RegExp(/^\d+$/);
-
 type Sort = "asc" | null;
 
 export const Users = () => {
@@ -50,8 +48,7 @@ export const Users = () => {
     location: "",
     order: reverseSortDirection ? "desc" : "asc",
     skip: (page - 1) * rowsPerPage,
-    name: NUMBERREGEX.test(searchTerm) ? "" : searchTerm,
-    phoneNumber: NUMBERREGEX.test(searchTerm) ? searchTerm : "",
+    searchTerm: searchTerm,
   });
 
   const rows = data?.data.data.map((element) => (

@@ -7,8 +7,7 @@ interface Payload {
   bloodGroup: string;
   location: string;
   order: string;
-  name?: string;
-  phoneNumber?: string;
+  searchTerm?: string;
 }
 
 export interface UsersData {
@@ -33,8 +32,7 @@ export const useUsersData = (payload: Payload) => {
       payload.bloodGroup,
       payload.location,
       payload.order,
-      payload.name,
-      payload.phoneNumber,
+      payload.searchTerm,
     ],
     queryFn: async () =>
       await axios.get<UsersData>("/donors/", {
