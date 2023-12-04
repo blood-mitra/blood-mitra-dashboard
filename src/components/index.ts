@@ -1,3 +1,3 @@
 export * from "./logo";
-export * from "./SortableTHead";
+export * from "./SortableTh";
 export * from "./TablePagination";
