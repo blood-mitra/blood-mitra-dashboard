@@ -12,6 +12,7 @@ import {
   Table,
   TextInput,
   Title,
+  useMantineColorScheme,
 } from "@mantine/core";
 import { useDebouncedState, useInputState } from "@mantine/hooks";
 
@@ -24,6 +25,8 @@ import { useUsersData } from "./queries";
 type Sort = "asc" | null;
 
 export const Users = () => {
+  const { colorScheme } = useMantineColorScheme();
+
   const [sort, setSort] = useState<Sort>("asc");
 
   const [reverseSortDirection, setReverseSortDirection] = useState(false);
@@ -65,9 +68,8 @@ export const Users = () => {
       </Table.Td>
     </Table.Tr>
   ));
-
   const tableHeader = (
-    <Table.Tr>
+    <Table.Tr bg={colorScheme === "light" ? "gray.1" : "gray.7"}>
       <Th
         sorted={sort === "asc"}
         reversed={reverseSortDirection}
@@ -118,6 +120,7 @@ export const Users = () => {
         horizontalSpacing="md"
         verticalSpacing="xs"
         highlightOnHover
+        withTableBorder
         captionSide="bottom"
       >
         <Table.Thead>{tableHeader}</Table.Thead>
