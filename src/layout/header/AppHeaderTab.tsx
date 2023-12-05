@@ -22,7 +22,7 @@ import { useContext } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import { Logo } from "components/logo";
+import { Logo } from "components";
 
 import { AuthContext } from "context";
 
