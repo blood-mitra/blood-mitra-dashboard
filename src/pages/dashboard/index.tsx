@@ -23,7 +23,7 @@ import { useGetStats } from "./queries";
 export const Dashboard = () => {
   const [dateFrom, setDateFrom] = useState<Date | null>(null);
 
-  const [DateTo, setDateTo] = useState<Date | null>(null);
+  const [dateTo, setDateTo] = useState<Date | null>(null);
 
   const [filter, setFilter] = useState("All");
 
@@ -31,11 +31,12 @@ export const Dashboard = () => {
     dateFrom: dateFrom
       ? dayjs(dateFrom).format("YYYY-MM-DD").toString()
       : undefined,
-    dateTo: DateTo ? dayjs(DateTo).format("YYYY-MM-DD").toString() : undefined,
+    dateTo: dateTo ? dayjs(dateTo).format("YYYY-MM-DD").toString() : undefined,
   });
 
   useEffect(() => {
     setDateTo(new Date());
+    console.log(filter);
     if (filter === "All") {
       setDateFrom(null);
       setDateTo(null);
@@ -46,7 +47,7 @@ export const Dashboard = () => {
     } else if (filter === "Month") {
       setDateFrom(dayjs().subtract(1, "month").toDate());
     }
-  }, [filter]);
+  }, [dateFrom, dateTo, filter]);
 
   return (
     <Box>
@@ -71,7 +72,7 @@ export const Dashboard = () => {
           label="Date To"
           placeholder="Select Date"
           rightSection={<IconCalendar size={14} stroke={1.5} />}
-          value={DateTo}
+          value={dateTo}
           onChange={setDateTo}
         />
       </Flex>
