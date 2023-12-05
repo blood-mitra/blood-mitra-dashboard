@@ -33,7 +33,7 @@ export const Users = () => {
 
   const [searchTerm, setSearchTerm] = useDebouncedState("", 300);
 
-  const [bloodType, setBloodType] = useDebouncedState("", 300);
+  const [bloodType, setBloodType] = useState("");
 
   const [page, setPage] = useInputState(1);
 
@@ -51,7 +51,7 @@ export const Users = () => {
     location: "",
     order: reverseSortDirection ? "desc" : "asc",
     skip: (page - 1) * rowsPerPage,
-    searchTerm: searchTerm,
+    searchTerm,
   });
 
   const rows = data?.data.data.map((element) => (
@@ -92,7 +92,6 @@ export const Users = () => {
         Users
       </Title>
       <Grid mt={24} mb="md">
-        <LoadingOverlay visible={isLoading} />
         <Grid.Col span={10}>
           <TextInput
             mt={24}
