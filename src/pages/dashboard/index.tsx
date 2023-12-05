@@ -34,9 +34,12 @@ export const Dashboard = () => {
     dateTo: dateTo ? dayjs(dateTo).format("YYYY-MM-DD").toString() : undefined,
   });
 
+  const handleSetFilter = (val: string) => {
+    return () => setFilter(val);
+  };
+
   useEffect(() => {
     setDateTo(new Date());
-    console.log(filter);
     if (filter === "All") {
       setDateFrom(null);
       setDateTo(null);
@@ -47,7 +50,7 @@ export const Dashboard = () => {
     } else if (filter === "Month") {
       setDateFrom(dayjs().subtract(1, "month").toDate());
     }
-  }, [dateFrom, dateTo, filter]);
+  }, [filter]);
 
   return (
     <Box>
@@ -72,7 +75,9 @@ export const Dashboard = () => {
           label="Date To"
           placeholder="Select Date"
           rightSection={<IconCalendar size={14} stroke={1.5} />}
+          minDate={dateFrom ?? undefined}
           value={dateTo}
+          maxDate={dayjs().toDate()}
           onChange={setDateTo}
         />
       </Flex>
@@ -80,28 +85,28 @@ export const Dashboard = () => {
         <Button
           variant={filter === "All" ? "filled" : "light"}
           radius={20}
-          onClick={() => setFilter("All")}
+          onClick={handleSetFilter("All")}
         >
           All
         </Button>
         <Button
           variant={filter === "Today" ? "filled" : "light"}
           radius={20}
-          onClick={() => setFilter("Today")}
+          onClick={handleSetFilter("Today")}
         >
           Today
         </Button>
         <Button
           variant={filter === "Week" ? "filled" : "light"}
           radius={20}
-          onClick={() => setFilter("Week")}
+          onClick={handleSetFilter("Week")}
         >
           This Week
         </Button>
         <Button
           variant={filter === "Month" ? "filled" : "light"}
           radius={20}
-          onClick={() => setFilter("Month")}
+          onClick={handleSetFilter("Month")}
         >
           This Month
         </Button>
