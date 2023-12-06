@@ -33,7 +33,7 @@ export const Users = () => {
 
   const [searchTerm, setSearchTerm] = useDebouncedState("", 300);
 
-  const [bloodType, setBloodType] = useState("");
+  const [bloodType, setBloodType] = useState("All");
 
   const [page, setPage] = useInputState(1);
 
@@ -46,7 +46,7 @@ export const Users = () => {
   };
 
   const { data, isLoading } = useUsersData({
-    bloodGroup: bloodType,
+    bloodGroup: bloodType === "All" ? "" : bloodType,
     take: rowsPerPage,
     location: "",
     order: reverseSortDirection ? "desc" : "asc",
@@ -107,7 +107,7 @@ export const Users = () => {
           <Select
             label="Pick Blood Type"
             placeholder="All"
-            data={["A+", "B+", "AB+", "O+", "A-", "B-", "AB-", "O-"]}
+            data={["All", "A+", "B+", "AB+", "O+", "A-", "B-", "AB-", "O-"]}
             defaultValue={bloodType}
             onChange={(e) => setBloodType(e ?? "")}
           />

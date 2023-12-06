@@ -5,7 +5,6 @@ import {
   Button,
   Flex,
   Group,
-  LoadingOverlay,
   Paper,
   SimpleGrid,
   Skeleton,
@@ -54,7 +53,6 @@ export const Dashboard = () => {
 
   return (
     <Box>
-      <LoadingOverlay visible={isFetching} />
       <Title order={1} mb={"20px"}>
         Home
       </Title>
@@ -113,7 +111,7 @@ export const Dashboard = () => {
       </Group>
 
       <SimpleGrid cols={3}>
-        <Paper p="md" shadow="lg" radius="lg" withBorder>
+        <Paper p="md" shadow="lg" radius="lg" withBorder h={120}>
           <Text fz={20} mb={12}>
             Registered Users
           </Text>
