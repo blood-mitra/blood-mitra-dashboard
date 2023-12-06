@@ -19,6 +19,8 @@ import dayjs from "dayjs";
 
 import { useGetStats } from "./queries";
 
+const STATS_FREQUENCIES = ["All", "Today", "This Week", "This Month"];
+
 export const Dashboard = () => {
   const [dateFrom, setDateFrom] = useState<Date | null>(null);
 
@@ -33,9 +35,7 @@ export const Dashboard = () => {
     dateTo: dateTo ? dayjs(dateTo).format("YYYY-MM-DD").toString() : undefined,
   });
 
-  const handleSetFilter = (val: string) => {
-    return () => setFilter(val);
-  };
+  const handleSetFilter = (val: string) => () => setFilter(val);
 
   useEffect(() => {
     setDateTo(new Date());
@@ -44,9 +44,9 @@ export const Dashboard = () => {
       setDateTo(null);
     } else if (filter === "Today") {
       setDateFrom(new Date());
-    } else if (filter === "Week") {
+    } else if (filter === "This Week") {
       setDateFrom(dayjs().subtract(1, "week").toDate());
-    } else if (filter === "Month") {
+    } else if (filter === "This Month") {
       setDateFrom(dayjs().subtract(1, "month").toDate());
     }
   }, [filter]);
@@ -80,34 +80,18 @@ export const Dashboard = () => {
         />
       </Flex>
       <Group mb={32}>
-        <Button
-          variant={filter === "All" ? "filled" : "light"}
-          radius={20}
-          onClick={handleSetFilter("All")}
-        >
-          All
-        </Button>
-        <Button
-          variant={filter === "Today" ? "filled" : "light"}
-          radius={20}
-          onClick={handleSetFilter("Today")}
-        >
-          Today
-        </Button>
-        <Button
-          variant={filter === "Week" ? "filled" : "light"}
-          radius={20}
-          onClick={handleSetFilter("Week")}
-        >
-          This Week
-        </Button>
-        <Button
-          variant={filter === "Month" ? "filled" : "light"}
-          radius={20}
-          onClick={handleSetFilter("Month")}
-        >
-          This Month
-        </Button>
+        {STATS_FREQUENCIES.map((stat, index) => {
+          return (
+            <Button
+              variant={filter === stat ? "filled" : "light"}
+              key={index}
+              radius={20}
+              onClick={handleSetFilter(stat)}
+            >
+              {stat}
+            </Button>
+          );
+        })}
       </Group>
 
       <SimpleGrid cols={3}>
