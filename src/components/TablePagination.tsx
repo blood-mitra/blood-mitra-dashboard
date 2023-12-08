@@ -15,8 +15,8 @@ export const TablePagination = ({
   total,
   onRowsPerPageChange,
 }: Props) => {
-  const handleChange = (value: string) =>
-    onRowsPerPageChange(Number(value) as RowsPerPage);
+  const handleChange = (value: string | null) =>
+    onRowsPerPageChange((Number(value) || 10) as RowsPerPage);
 
   return (
     <Group>
